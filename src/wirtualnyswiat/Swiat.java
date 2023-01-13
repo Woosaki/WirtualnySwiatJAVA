@@ -4,7 +4,6 @@ import wirtualnyswiat.organizmy.roslina.*;
 import wirtualnyswiat.organizmy.zwierze.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public class Swiat {
@@ -79,6 +78,14 @@ public class Swiat {
         });
     }
 
+    public void zmienKolory(){
+        for (Organizm organizm : kolejnosc) {
+            if(organizm instanceof Wilk) {
+                //getPrzycisk(organizm.getX(), organizm.getY())
+            }
+        }
+    }
+
     public void wykonajTure() {
         sortOrganizmow();
         for (int i = 0; i < kolejnosc.size()- iloscNowychOrganizmow; i++) {
@@ -89,7 +96,7 @@ public class Swiat {
         tura++;
     }
 
-    public void rysujSwiat() {
+    /*public void rysujSwiat() {
         System.out.println("\n\t\t\tTURA: " + tura);
         System.out.print("===============================================================\n    ");
         for (int i = 0; i < N; i++)	{
@@ -117,7 +124,7 @@ public class Swiat {
         System.out.println("\t\t   ZAPISZ DO PLIKU : 2 ");
         System.out.println("\t\t   WCZYTAJ Z PLIKU : 3 ");
         System.out.println("===============================================================");
-    }
+    }*/
 
     private void dodajLosowoOrganizmNaMape(Organizm organizm) {
         Random random = new Random();
