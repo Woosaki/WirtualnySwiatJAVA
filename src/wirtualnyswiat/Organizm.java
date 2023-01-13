@@ -1,9 +1,15 @@
 package wirtualnyswiat;
 
+import wirtualnyswiat.organizmy.roslina.Ciern;
+import wirtualnyswiat.organizmy.roslina.Guarana;
+import wirtualnyswiat.organizmy.roslina.Trawa;
+
+import java.awt.*;
+
 public abstract class Organizm {
     public abstract void akcja();
     public abstract void kolizja(Organizm organizm);
-    public abstract char rysowanie();
+    public abstract Color getColor();
     public abstract String nazwa();
     public abstract void rozmnazanie();
 
@@ -44,7 +50,7 @@ public abstract class Organizm {
     }
 
     public boolean czyRoslina() {
-        return this.rysowanie() == 'T' || this.rysowanie() == 'C' || this.rysowanie() == 'G';
+        return (this instanceof Trawa) || (this instanceof Ciern) || (this instanceof Guarana);
     }
 
     public void rozmnoz(Organizm organizm) {
@@ -60,4 +66,6 @@ public abstract class Organizm {
     protected int y;
     protected int wiek;
     protected Swiat swiat;
+
+
 }

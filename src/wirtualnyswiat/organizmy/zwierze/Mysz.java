@@ -4,6 +4,8 @@ import wirtualnyswiat.Organizm;
 import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Zwierze;
 
+import java.awt.*;
+
 public class Mysz extends Zwierze {
     public Mysz(Swiat swiat) {
         super(swiat);
@@ -12,8 +14,8 @@ public class Mysz extends Zwierze {
     }
 
     @Override
-    public char rysowanie() {
-        return 'M';
+    public Color getColor() {
+        return new Color(28,169,201);
     }
 
     @Override

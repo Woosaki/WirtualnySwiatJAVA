@@ -4,6 +4,8 @@ import wirtualnyswiat.Organizm;
 import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Zwierze;
 
+import java.awt.*;
+
 public class Zmija extends Zwierze {
     public Zmija(Swiat swiat) {
         super(swiat);
@@ -15,7 +17,7 @@ public class Zmija extends Zwierze {
     public void kolizja(Organizm organizm) {
         if (organizm.czyRoslina())
             super.kolizja(organizm);
-	    else if (organizm.rysowanie() == 'Z') {
+	    else if (organizm instanceof Zmija) {
             if (czyRozmnozyc(organizm))
                 rozmnazanie();
             else if (this.sila <= organizm.getSila()) {
@@ -29,8 +31,8 @@ public class Zmija extends Zwierze {
     }
 
     @Override
-    public char rysowanie() {
-        return 'Z';
+    public Color getColor() {
+        return new Color(105, 53, 156);
     }
 
     @Override

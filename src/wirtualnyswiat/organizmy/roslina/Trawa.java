@@ -5,14 +5,16 @@ import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Roslina;
 import wirtualnyswiat.organizmy.zwierze.Wilk;
 
+import java.awt.*;
+
 public class Trawa extends Roslina {
     public Trawa(Swiat swiat) {
         super(swiat);
     }
 
     @Override
-    public char rysowanie() {
-        return 'T';
+    public Color getColor() {
+        return new Color(27,131,40);
     }
 
     @Override

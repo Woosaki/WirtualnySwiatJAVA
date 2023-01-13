@@ -4,6 +4,7 @@ import wirtualnyswiat.Organizm;
 import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Roslina;
 
+import java.awt.*;
 import java.util.Random;
 
 public class Ciern extends Roslina {
@@ -37,8 +38,8 @@ public class Ciern extends Roslina {
     }
 
     @Override
-    public char rysowanie() {
-        return 'C';
+    public Color getColor() {
+        return new Color(21, 45, 101);
     }
 
     @Override

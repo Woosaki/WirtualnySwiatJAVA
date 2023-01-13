@@ -5,6 +5,8 @@ import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Roslina;
 import wirtualnyswiat.organizmy.zwierze.Wilk;
 
+import java.awt.*;
+
 public class Guarana extends Roslina {
     public Guarana(Swiat swiat) {
         super(swiat);
@@ -18,8 +20,8 @@ public class Guarana extends Roslina {
     }
 
     @Override
-    public char rysowanie() {
-        return 'G';
+    public Color getColor() {
+        return new Color(204,0,204);
     }
 
     @Override

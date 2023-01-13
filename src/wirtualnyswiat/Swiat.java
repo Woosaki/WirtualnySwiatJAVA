@@ -78,14 +78,6 @@ public class Swiat {
         });
     }
 
-    public void zmienKolory(){
-        for (Organizm organizm : kolejnosc) {
-            if(organizm instanceof Wilk) {
-                //getPrzycisk(organizm.getX(), organizm.getY())
-            }
-        }
-    }
-
     public void wykonajTure() {
         sortOrganizmow();
         for (int i = 0; i < kolejnosc.size()- iloscNowychOrganizmow; i++) {

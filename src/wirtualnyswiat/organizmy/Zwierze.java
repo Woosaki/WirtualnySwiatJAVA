@@ -2,6 +2,9 @@ package wirtualnyswiat.organizmy;
 
 import wirtualnyswiat.Organizm;
 import wirtualnyswiat.Swiat;
+import wirtualnyswiat.organizmy.roslina.Ciern;
+import wirtualnyswiat.organizmy.zwierze.Mysz;
+import wirtualnyswiat.organizmy.zwierze.Zmija;
 
 import java.util.Random;
 
@@ -53,7 +56,7 @@ public abstract class Zwierze extends Organizm {
         int organizmX = organizm.getX();
         int organizmY = organizm.getY();
         //atakowanie ciernia przez slaby organizm
-        if(organizm.rysowanie() =='C' && this.sila <= organizm.getSila())
+        if(organizm instanceof Ciern && this.sila <= organizm.getSila())
             organizm.kolizja(this);
             //atakowanie zwyklej rosliny
         else if (organizm.czyRoslina()) {
@@ -62,19 +65,19 @@ public abstract class Zwierze extends Organizm {
         }
         else {
             //jesli kolizja z tym samym gatunkiem
-            if (this.rysowanie() == organizm.rysowanie()) {
+            if (this.getClass().equals(organizm.getClass())) {
                 if (czyRozmnozyc(organizm))
                     rozmnazanie();
             }
             //atakowanie zmiji przez silniejszy organizm
-            else if (organizm.rysowanie() == 'Z' && sila >= organizm.getSila()) {
+            else if (organizm instanceof Zmija && sila >= organizm.getSila()) {
                 System.out.println("Atakujacy " + nazwa() + " pokonuje " + organizm.nazwa() + ", lecz ta go zatruwa "
                         + "i oba organizmy gina na polu (" + organizmX + ", " + organizmY + ")\n");
                 swiat.usunOrganizm(organizm);
                 swiat.usunOrganizm(this);
             }
             //atakowanie myszy przez zwierze nie bedace zmija z pustym polem obok
-            else if (this.rysowanie() != 'Z' && organizm.rysowanie() == 'M' && swiat.czyWolnePoleObok(organizm)) {
+            else if (!(organizm instanceof Zmija) && organizm instanceof Mysz && swiat.czyWolnePoleObok(organizm)) {
                 System.out.println(organizm.nazwa() + " uciekla na sasiednie pole przed " + nazwa()
                         + " na polu (" + organizmX + ", " + organizmY + ")\n");
                 swiat.przesunOrganizmLosowo(organizm);

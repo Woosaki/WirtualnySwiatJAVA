@@ -4,6 +4,8 @@ import wirtualnyswiat.Organizm;
 import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Zwierze;
 
+import java.awt.*;
+
 public class Leniwiec extends Zwierze {
     public Leniwiec(Swiat swiat) {
         super(swiat);
@@ -18,8 +20,8 @@ public class Leniwiec extends Zwierze {
     }
 
     @Override
-    public char rysowanie() {
-        return 'L';
+    public Color getColor() {
+        return new Color(228, 155, 15);
     }
 
     @Override

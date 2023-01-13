@@ -4,6 +4,8 @@ import wirtualnyswiat.Organizm;
 import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Zwierze;
 
+import java.awt.*;
+
 public class Wilk extends Zwierze {
     public Wilk(Swiat swiat) {
         super(swiat);
@@ -12,8 +14,8 @@ public class Wilk extends Zwierze {
     }
 
     @Override
-    public char rysowanie() {
-        return 'W';
+    public Color getColor() {
+        return new Color(128, 0, 0);
     }
 
     @Override
