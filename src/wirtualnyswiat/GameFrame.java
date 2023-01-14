@@ -9,16 +9,10 @@ import java.sql.SQLOutput;
 
 public class GameFrame extends JFrame implements ActionListener {
     private Swiat swiat;
-    private JMenuBar menu;
-    private JMenu plikMenu;
-    private JMenu infoMenu;
     private JMenuItem wczytajMenu;
     private JMenuItem zapiszMenu;
     private JMenuItem oMnieMenu;
-    private JPanel mapaPanel;
     private JTextArea komentarz;
-    private JScrollPane komentarzScroll;
-    private JPanel legenda;
     private JButton nastepnaTura;
     private JButton[][] przycisk;
 
@@ -30,41 +24,20 @@ public class GameFrame extends JFrame implements ActionListener {
         swiat = new Swiat();
 
         stworzMenu();
-
-        mapaPanel = new JPanel();
-        mapaPanel.setBackground(Color.darkGray);
-        mapaPanel.setBounds(20,20,600,600);
-        mapaPanel.setLayout(new GridLayout(20, 20));
-
-        przycisk = new JButton[20][20];
-
-        for(int i = 0; i < 20; i++) {
-            for(int j = 0; j < 20; j++) {
-                przycisk[i][j] = new JButton();
-                mapaPanel.add(przycisk[i][j]);
-            }
-        }
-
+        stworzGlownyPanel();
         stworzKomentarze();
-
         stworzLegende();
-
-        nastepnaTura = new JButton("Nastepna tura");
-        nastepnaTura.setFocusable(false);
-        nastepnaTura.setBounds(20, 630, 200, 50);
-        nastepnaTura.addActionListener(this);
+        stworzNastepnaTura();
 
         this.zmienKolory();
-        this.add(mapaPanel);
-        this.add(nastepnaTura);
         this.setSize(1300, 760);
         this.setResizable(false);
         this.setVisible(true);
     }
 
     private void stworzMenu() {
-        menu = new JMenuBar();
-        plikMenu = new JMenu("Plik");
+        JMenuBar menu = new JMenuBar();
+        JMenu plikMenu = new JMenu("Plik");
 
         wczytajMenu = new JMenuItem("Wczytaj");
         wczytajMenu.addActionListener(this);
@@ -74,7 +47,7 @@ public class GameFrame extends JFrame implements ActionListener {
         zapiszMenu.addActionListener(this);
         plikMenu.add(zapiszMenu);
 
-        infoMenu = new JMenu("Info");
+        JMenu infoMenu = new JMenu("Info");
         oMnieMenu = new JMenuItem("O mnie");
         oMnieMenu.addActionListener(this);
         infoMenu.add(oMnieMenu);
@@ -85,6 +58,45 @@ public class GameFrame extends JFrame implements ActionListener {
         this.setJMenuBar(menu);
     }
 
+    private void stworzGlownyPanel() {
+        JPanel panelX = new JPanel();
+        panelX.setBounds(20,0,600,20);
+        panelX.setLayout(new GridLayout(1, 20));
+
+        JPanel panelY = new JPanel();
+        panelY.setBounds(0,20,20,600);
+        panelY.setLayout(new GridLayout(20, 1));
+
+        JPanel mapaPanel = new JPanel();
+        mapaPanel.setBackground(Color.darkGray);
+        mapaPanel.setBounds(20,20,600,600);
+        mapaPanel.setLayout(new GridLayout(20, 20));
+
+        JLabel[] indexX = new JLabel[20];
+        JLabel[] indexY = new JLabel[20];
+        przycisk = new JButton[20][20];
+
+        for(int i = 0; i < 20; i++) {
+            indexX[i] = new JLabel(String.valueOf(i));
+            indexX[i].setVerticalAlignment(JLabel.CENTER);
+            indexX[i].setHorizontalAlignment(JLabel.CENTER);
+            panelX.add(indexX[i]);
+
+            indexY[i] = new JLabel(String.valueOf(i));
+            indexY[i].setVerticalAlignment(JLabel.CENTER);
+            indexY[i].setHorizontalAlignment(JLabel.CENTER);
+            panelY.add(indexY[i]);
+
+            for(int j = 0; j < 20; j++) {
+                przycisk[i][j] = new JButton();
+                mapaPanel.add(przycisk[i][j]);
+            }
+        }
+        this.add(panelX);
+        this.add(panelY);
+        this.add(mapaPanel);
+    }
+
     private void stworzKomentarze() {
         komentarz = new JTextArea("");
         komentarz.setBackground(Color.LIGHT_GRAY);
@@ -92,7 +104,7 @@ public class GameFrame extends JFrame implements ActionListener {
         komentarz.setForeground(new Color(27,27,27));
         komentarz.setEditable(false);
 
-        komentarzScroll = new JScrollPane(komentarz);
+        JScrollPane komentarzScroll = new JScrollPane(komentarz);
         komentarzScroll.setBackground(Color.LIGHT_GRAY);
         komentarzScroll.setBounds(640,20,600,500);
         komentarzScroll.setFocusable(false);
@@ -101,7 +113,7 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
     private void stworzLegende() {
-        legenda = new JPanel();
+        JPanel legenda = new JPanel();
         legenda.setBackground(Color.GRAY);
         legenda.setBounds(640,520,600,100);
         legenda.setLayout(new GridLayout(3, 3));
@@ -116,36 +128,37 @@ public class GameFrame extends JFrame implements ActionListener {
         JLabel guaranaLabel = new JLabel("Magenta - Guarana");
         JLabel nicLabel = new JLabel();
 
-        ustawLegendaLabel(wilkLabel, new Color(128, 0, 0));
-        ustawLegendaLabel(owcaLabel, new Color(61, 12, 2));
-        ustawLegendaLabel(zmijaLabel, new Color(105, 53, 156));
-        ustawLegendaLabel(leniwiecLabel, new Color(228, 155, 15));
-        ustawLegendaLabel(myszLabel, new Color(28,169,201));
-        ustawLegendaLabel(trawaLabel, new Color(27,131,40));
-        ustawLegendaLabel(ciernLabel, new Color(21, 45, 101));
-        ustawLegendaLabel(guaranaLabel, new Color(204,0,204));
-        ustawLegendaLabel(nicLabel, Color.BLACK);
+        ustawLegendaLabel(legenda, wilkLabel, new Color(128, 0, 0));
+        ustawLegendaLabel(legenda, owcaLabel, new Color(61, 12, 2));
+        ustawLegendaLabel(legenda, zmijaLabel, new Color(105, 53, 156));
+        ustawLegendaLabel(legenda, leniwiecLabel, new Color(228, 155, 15));
+        ustawLegendaLabel(legenda, myszLabel, new Color(28,169,201));
+        ustawLegendaLabel(legenda, trawaLabel, new Color(27,131,40));
+        ustawLegendaLabel(legenda, ciernLabel, new Color(21, 45, 101));
+        ustawLegendaLabel(legenda, guaranaLabel, new Color(204,0,204));
+        ustawLegendaLabel(legenda, nicLabel, Color.BLACK);
 
         this.add(legenda);
     }
 
-    private void ustawLegendaLabel(JLabel label, Color color) {
+    private void ustawLegendaLabel(JPanel legenda, JLabel label, Color color) {
         label.setForeground(color);
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setBorder(BorderFactory.createLineBorder(color, 8));
         legenda.add(label);
     }
 
+    private void stworzNastepnaTura() {
+        nastepnaTura = new JButton("Nastepna tura");
+        nastepnaTura.setFocusable(false);
+        nastepnaTura.setBounds(20, 630, 200, 50);
+        nastepnaTura.addActionListener(this);
+
+        this.add(nastepnaTura);
+    }
+
     public static void main(String[] args){
         new GameFrame();
-    }
-
-    public void dodajDoKomentarza(String str){
-        komentarz.append(str);
-    }
-
-    public void wyczyscKomentarz() {
-        komentarz.setText("");
     }
 
     @Override
@@ -175,38 +188,3 @@ public class GameFrame extends JFrame implements ActionListener {
         }
     }
 }
-
-/*public class Main {
-    public static void main(String[] args) throws IOException {
-        int wybor;
-        Swiat swiat = new Swiat();
-        swiat.rysujSwiat();
-
-        Scanner scanner = new Scanner(System.in);
-        wybor = 1;
-
-        while (wybor != 4) {
-            wybor = scanner.nextInt();
-            switch (wybor) {
-                case 1 -> {
-                    swiat.wykonajTure();
-                    swiat.rysujSwiat();
-                }
-                case 2 -> {
-                    //swiat.zapiszSwiat();
-                    System.out.println("Zapisano obecny stan gry!\n");
-                    swiat.rysujSwiat();
-                }
-                case 3 -> {
-                    //swiat.wczytajSwiat();
-                    System.out.println("Wczytano poprzedni stan gry!\n");
-                    swiat.rysujSwiat();
-                }
-                default -> {
-                    System.out.println("Nie ma takiej opcji w menu\n");
-                    swiat.rysujSwiat();
-                }
-            }
-        }
-    }
-}*/
