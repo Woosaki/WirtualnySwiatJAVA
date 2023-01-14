@@ -60,6 +60,11 @@ public abstract class Organizm {
         swiat.zwiekszIloscNowychOrganizmow();
     }
 
+    @Override
+    public String toString() {
+        return nazwa() + " " + sila + " " + inicjatywa + " " + wiek + " " + x + " " + y;
+    }
+
     protected int sila;
     protected int inicjatywa;
     protected int x;

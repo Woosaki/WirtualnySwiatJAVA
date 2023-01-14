@@ -1,9 +1,24 @@
 package wirtualnyswiat;
 
+import wirtualnyswiat.organizmy.roslina.Ciern;
+import wirtualnyswiat.organizmy.roslina.Guarana;
+import wirtualnyswiat.organizmy.roslina.Trawa;
+import wirtualnyswiat.organizmy.zwierze.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GameFrame extends JFrame implements ActionListener {
     private Swiat swiat;
@@ -171,8 +186,10 @@ public class GameFrame extends JFrame implements ActionListener {
             komentarz.setText(swiat.getKomentarz());
             zmienKolory();
         } else if(e.getSource() == wczytajMenu) {
+            wczytajGre();
             komentarz.setText("\n\n\t\t         Wczytano poprzedni stan gry");
         } else if(e.getSource() == zapiszMenu) {
+            zapiszGre();
             komentarz.setText("\n\n\t\t                   Zapisano stan gry");
         } else if (e.getSource() == oMnieMenu) {
             JOptionPane.showMessageDialog(null, "Kamil Szczukowski 186714", "Projekt stworzyl:", JOptionPane.PLAIN_MESSAGE);
@@ -189,5 +206,69 @@ public class GameFrame extends JFrame implements ActionListener {
                     przycisk[i][j].setBackground(organizm.getColor());
             }
         }
+    }
+
+    private void zapiszGre() {
+        StringBuilder str = new StringBuilder();
+        str.append(swiat.getTura()).append("\n").append(swiat.getRozmiar()).append("\n");
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 20; j++) {
+                Organizm organizm = swiat.organizmNaPolu(i, j);
+                if (organizm != null)
+                    str.append(organizm.toString()).append("\n");
+            }
+        }
+        try {
+            FileWriter zapisz = new FileWriter("swiat.txt");
+            zapisz.write(str.toString());
+            zapisz.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void wczytajGre() {
+        swiat.wyczyscMape();
+        try {
+            List<String> linie = Files.readAllLines(Path.of("swiat.txt"), StandardCharsets.UTF_8);
+            for (int i = 0; i < linie.size(); i++) {
+                String str = linie.get(i);
+                if (i == 0) {
+                    swiat.ustawTura(Integer.parseInt(str));
+                } else if (i == 1) {
+                    //swiat.ustawRozmiar(Integer.parseInt(str));
+                }
+                else {
+                    List<String> atrybuty = Arrays.asList(str.split(" "));
+                    String nazwa = atrybuty.get(0);
+                    int sila = Integer.parseInt(atrybuty.get(1));
+                    int inicjatywa = Integer.parseInt(atrybuty.get(2));
+                    int wiek = Integer.parseInt(atrybuty.get(3));
+                    int x = Integer.parseInt(atrybuty.get(4));
+                    int y = Integer.parseInt(atrybuty.get(5));
+
+                    Organizm organizm = null;
+                    switch (nazwa) {
+                        case "WILK" -> organizm = new Wilk(swiat);
+                        case "OWCA" -> organizm = new Owca(swiat);
+                        case "ZMIJA" -> organizm = new Zmija(swiat);
+                        case "LENIWIEC" -> organizm = new Leniwiec(swiat);
+                        case "MYSZ" -> organizm = new Mysz(swiat);
+                        case "TRAWA" -> organizm = new Trawa(swiat);
+                        case "GUARANA" -> organizm = new Guarana(swiat);
+                        case "CIERN" -> organizm = new Ciern(swiat);
+                    }
+                    assert organizm != null;
+                    organizm.ustawSila(sila);
+                    organizm.ustawInicjatywa(inicjatywa);
+                    organizm.ustawWiek(wiek);
+
+                    swiat.dodajOrganizmNaMape(organizm, x, y);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        zmienKolory();
     }
 }

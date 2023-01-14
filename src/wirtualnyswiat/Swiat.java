@@ -52,6 +52,13 @@ public class Swiat {
     public int getTura(){
         return tura;
     }
+    public int getRozmiar() {
+        return N;
+    }
+
+    public void ustawTura(int tura) {
+        this.tura = tura;
+    }
 
     public void zwiekszIloscNowychOrganizmow(){
         iloscNowychOrganizmow++;
@@ -87,7 +94,7 @@ public class Swiat {
     }
 
     public void wykonajTure() {
-        komentarz = "";
+        komentarz = "\t\t\tTura: "+ tura + "\n\n\n";
         sortOrganizmow();
         for (int i = 0; i < kolejnosc.size()- iloscNowychOrganizmow; i++) {
             kolejnosc.get(i).akcja();
@@ -95,6 +102,15 @@ public class Swiat {
         }
         iloscNowychOrganizmow = 0;
         tura++;
+    }
+
+    public void wyczyscMape() {
+        for (int j = 0; j < N; j++) {
+            for (int i = 0; i < N; i++) {
+                mapa[i][j] = null;
+            }
+        }
+        kolejnosc.clear();
     }
 
     private void dodajLosowoOrganizmNaMape(Organizm organizm) {
