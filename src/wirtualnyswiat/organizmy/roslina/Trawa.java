@@ -3,7 +3,6 @@ package wirtualnyswiat.organizmy.roslina;
 import wirtualnyswiat.Organizm;
 import wirtualnyswiat.Swiat;
 import wirtualnyswiat.organizmy.Roslina;
-import wirtualnyswiat.organizmy.zwierze.Wilk;
 
 import java.awt.*;
 

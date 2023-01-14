@@ -5,12 +5,19 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
 
 public class GameFrame extends JFrame implements ActionListener {
     private Swiat swiat;
+    private JMenuBar menu;
+    private JMenu plikMenu;
+    private JMenu infoMenu;
+    private JMenuItem wczytajMenu;
+    private JMenuItem zapiszMenu;
+    private JMenuItem oMnieMenu;
     private JPanel mapaPanel;
-    private JPanel komentarzPanel;
-    private JLabel komentarzLabel;
+    private JTextArea komentarz;
+    private JScrollPane komentarzScroll;
     private JPanel legenda;
     private JButton nastepnaTura;
     private JButton[][] przycisk;
@@ -21,6 +28,8 @@ public class GameFrame extends JFrame implements ActionListener {
         this.setLayout(null);
 
         swiat = new Swiat();
+
+        stworzMenu();
 
         mapaPanel = new JPanel();
         mapaPanel.setBackground(Color.darkGray);
@@ -36,11 +45,7 @@ public class GameFrame extends JFrame implements ActionListener {
             }
         }
 
-        komentarzPanel = new JPanel();
-        komentarzPanel.setBackground(Color.LIGHT_GRAY);
-        komentarzPanel.setBounds(640,20,600,500);
-        komentarzLabel = new JLabel();
-        komentarzPanel.add(komentarzLabel);
+        stworzKomentarze();
 
         stworzLegende();
 
@@ -51,11 +56,48 @@ public class GameFrame extends JFrame implements ActionListener {
 
         this.zmienKolory();
         this.add(mapaPanel);
-        this.add(komentarzPanel);
         this.add(nastepnaTura);
-        this.setSize(1280, 720);
+        this.setSize(1300, 760);
         this.setResizable(false);
         this.setVisible(true);
+    }
+
+    private void stworzMenu() {
+        menu = new JMenuBar();
+        plikMenu = new JMenu("Plik");
+
+        wczytajMenu = new JMenuItem("Wczytaj");
+        wczytajMenu.addActionListener(this);
+        plikMenu.add(wczytajMenu);
+
+        zapiszMenu = new JMenuItem("Zapisz");
+        zapiszMenu.addActionListener(this);
+        plikMenu.add(zapiszMenu);
+
+        infoMenu = new JMenu("Info");
+        oMnieMenu = new JMenuItem("O mnie");
+        oMnieMenu.addActionListener(this);
+        infoMenu.add(oMnieMenu);
+
+        menu.add(plikMenu);
+        menu.add(infoMenu);
+
+        this.setJMenuBar(menu);
+    }
+
+    private void stworzKomentarze() {
+        komentarz = new JTextArea("");
+        komentarz.setBackground(Color.LIGHT_GRAY);
+        komentarz.setFont(new Font("Tangerine", Font.BOLD, 13));
+        komentarz.setForeground(new Color(27,27,27));
+        komentarz.setEditable(false);
+
+        komentarzScroll = new JScrollPane(komentarz);
+        komentarzScroll.setBackground(Color.LIGHT_GRAY);
+        komentarzScroll.setBounds(640,20,600,500);
+        komentarzScroll.setFocusable(false);
+
+        this.add(komentarzScroll);
     }
 
     private void stworzLegende() {
@@ -74,44 +116,50 @@ public class GameFrame extends JFrame implements ActionListener {
         JLabel guaranaLabel = new JLabel("Magenta - Guarana");
         JLabel nicLabel = new JLabel();
 
-        ustawKolorLabel(wilkLabel, new Color(128, 0, 0));
-        ustawKolorLabel(owcaLabel, new Color(61, 12, 2));
-        ustawKolorLabel(zmijaLabel, new Color(105, 53, 156));
-        ustawKolorLabel(leniwiecLabel, new Color(228, 155, 15));
-        ustawKolorLabel(myszLabel, new Color(28,169,201));
-        ustawKolorLabel(trawaLabel, new Color(27,131,40));
-        ustawKolorLabel(ciernLabel, new Color(21, 45, 101));
-        ustawKolorLabel(guaranaLabel, new Color(204,0,204));
-        ustawKolorLabel(nicLabel, Color.BLACK);
-
-        legenda.add(wilkLabel);
-        legenda.add(owcaLabel);
-        legenda.add(zmijaLabel);
-        legenda.add(leniwiecLabel);
-        legenda.add(myszLabel);
-        legenda.add(trawaLabel);
-        legenda.add(ciernLabel);
-        legenda.add(guaranaLabel);
-        legenda.add(nicLabel);
+        ustawLegendaLabel(wilkLabel, new Color(128, 0, 0));
+        ustawLegendaLabel(owcaLabel, new Color(61, 12, 2));
+        ustawLegendaLabel(zmijaLabel, new Color(105, 53, 156));
+        ustawLegendaLabel(leniwiecLabel, new Color(228, 155, 15));
+        ustawLegendaLabel(myszLabel, new Color(28,169,201));
+        ustawLegendaLabel(trawaLabel, new Color(27,131,40));
+        ustawLegendaLabel(ciernLabel, new Color(21, 45, 101));
+        ustawLegendaLabel(guaranaLabel, new Color(204,0,204));
+        ustawLegendaLabel(nicLabel, Color.BLACK);
 
         this.add(legenda);
     }
 
-    private void ustawKolorLabel(JLabel label, Color color) {
+    private void ustawLegendaLabel(JLabel label, Color color) {
         label.setForeground(color);
         label.setHorizontalAlignment(JLabel.CENTER);
-        label.setBorder(BorderFactory.createLineBorder(color, 3));
+        label.setBorder(BorderFactory.createLineBorder(color, 8));
+        legenda.add(label);
     }
 
     public static void main(String[] args){
         new GameFrame();
     }
 
+    public void dodajDoKomentarza(String str){
+        komentarz.append(str);
+    }
+
+    public void wyczyscKomentarz() {
+        komentarz.setText("");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == nastepnaTura) {
             swiat.wykonajTure();
+            komentarz.setText(swiat.getKomentarz());
             zmienKolory();
+        } else if(e.getSource() == wczytajMenu) {
+            System.out.println("Wczytano poprzedni stan gry");
+        } else if(e.getSource() == zapiszMenu) {
+            System.out.println("Zapisano stan gry");
+        } else if (e.getSource() == oMnieMenu) {
+            JOptionPane.showMessageDialog(null, "Kamil Szczukowski 186714", "Projekt stworzyl:", JOptionPane.PLAIN_MESSAGE);
         }
     }
 

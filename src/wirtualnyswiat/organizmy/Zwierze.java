@@ -71,31 +71,31 @@ public abstract class Zwierze extends Organizm {
             }
             //atakowanie zmiji przez silniejszy organizm
             else if (organizm instanceof Zmija && sila >= organizm.getSila()) {
-                System.out.println("Atakujacy " + nazwa() + " pokonuje " + organizm.nazwa() + ", lecz ta go zatruwa "
-                        + "i oba organizmy gina na polu (" + organizmX + ", " + organizmY + ")\n");
+                swiat.dodajKomentarz("Atakujacy " + nazwa() + " pokonuje " + organizm.nazwa() + ", lecz ta go zatruwa "
+                        + "i oba organizmy gina na polu (" + organizmX + ", " + organizmY + ")\n\n");
                 swiat.usunOrganizm(organizm);
                 swiat.usunOrganizm(this);
             }
             //atakowanie myszy przez zwierze nie bedace zmija z pustym polem obok
             else if (!(organizm instanceof Zmija) && organizm instanceof Mysz && swiat.czyWolnePoleObok(organizm)) {
-                System.out.println(organizm.nazwa() + " uciekla na sasiednie pole przed " + nazwa()
-                        + " na polu (" + organizmX + ", " + organizmY + ")\n");
+                swiat.dodajKomentarz(organizm.nazwa() + " uciekla na sasiednie pole przed " + nazwa()
+                        + " na polu (" + organizmX + ", " + organizmY + ")\n\n");
                 swiat.przesunOrganizmLosowo(organizm);
                 swiat.przesunOrganizm(this, organizmX, organizmY);
             }
             //zwykla walka organizmow
             else {
-                System.out.println("Doszlo do walki pomiedzy " + nazwa() + " a " + organizm.nazwa()
-                        + " na polu (" + organizmX + ", " + organizmY + ")");
+                swiat.dodajKomentarz("Doszlo do walki pomiedzy " + nazwa() + " a " + organizm.nazwa()
+                        + " na polu (" + organizmX + ", " + organizmY + ")\n");
                 if (this.sila >= organizm.getSila()) {
 
                     swiat.usunOrganizm(organizm);
                     swiat.przesunOrganizm(this, organizmX, organizmY);
-                    System.out.println("Atakujacy " + nazwa() + " okazal sie silniejszy\n");
+                    swiat.dodajKomentarz("Atakujacy " + nazwa() + " okazal sie silniejszy\n\n");
                 }
                 else {
                     swiat.usunOrganizm(this);
-                    System.out.println("Broniacy " + organizm.nazwa() + " okazal sie silniejszy\n");
+                    swiat.dodajKomentarz("Broniacy " + organizm.nazwa() + " okazal sie silniejszy\n\n");
                 }
             }
         }
@@ -103,15 +103,15 @@ public abstract class Zwierze extends Organizm {
 
     public boolean czyRozmnozyc(Organizm organizm) {
         if (this.getWiek() < 3 || organizm.getWiek() < 3) {
-            System.out.println("Nie mozna rozmnozyc " + nazwa() + " na polu (" + x + ", " + y + "), gdyz ktorys organizm jest za mlody!\n");
+            swiat.dodajKomentarz("Nie mozna rozmnozyc " + nazwa() + " na polu (" + x + ", " + y + "), gdyz ktorys organizm jest za mlody!\n\n");
             return false;
         }
         else if (!swiat.czyWolnePoleObok(this)) {
-            System.out.println(nazwa() + " nie moze sie rozmnozyc na polu (" + x + ", " + y + "), gdyz nie ma miejsca obok!\n");
+            swiat.dodajKomentarz(nazwa() + " nie moze sie rozmnozyc na polu (" + x + ", " + y + "), gdyz nie ma miejsca obok!\n\n");
             return false;
         }
         else {
-            System.out.println(nazwa() + " sie rozmnaza na polu (" + x + ", " + y + ")\n");
+            swiat.dodajKomentarz(nazwa() + " sie rozmnaza na polu (" + x + ", " + y + ")\n\n");
             return true;
         }
     }

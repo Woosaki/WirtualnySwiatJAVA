@@ -20,17 +20,17 @@ public class Ciern extends Roslina {
         if (czyRozmnozyc == 0) {
             if (swiat.czyWolnePoleObok(this)) {
                 rozmnazanie();
-                System.out.println(nazwa() + " rozprzestrzenia sie na polu (" + x + ", " + y + ")\n");
+                swiat.dodajKomentarz(nazwa() + " rozprzestrzenia sie na polu (" + x + ", " + y + ")\n\n");
             }
             else
-                System.out.println(nazwa() + " nie mogl sie rozprzestrzenic na polu (" + x + ", " + y + "), gdyz nie bylo miejsca obok\n");
+                swiat.dodajKomentarz(nazwa() + " nie mogl sie rozprzestrzenic na polu (" + x + ", " + y + "), gdyz nie bylo miejsca obok\n\n");
         }
     }
 
     @Override
     public void kolizja(Organizm organizm) {
         if (this.sila >= organizm.getSila()) {
-            System.out.println(nazwa() + " pokonal " + organizm.nazwa() + " na polu (" + x + ", " + y + ")\n");
+            swiat.dodajKomentarz(nazwa() + " pokonal " + organizm.nazwa() + " na polu (" + x + ", " + y + ")\n\n");
             swiat.usunOrganizm(organizm);
         }
         else

@@ -15,7 +15,7 @@ public class Guarana extends Roslina {
     @Override
     public void kolizja(Organizm organizm) {
         super.kolizja(organizm);
-        System.out.println("GUARANA sprawila ze " + organizm.nazwa() + " zwiekszyl sile o 3!\n");
+        swiat.dodajKomentarz("GUARANA sprawila ze " + organizm.nazwa() + " zwiekszyl sile o 3!\n\n");
         organizm.ustawSila(organizm.getSila() + 3);
     }
 

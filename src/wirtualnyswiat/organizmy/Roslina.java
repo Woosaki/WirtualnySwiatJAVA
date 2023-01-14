@@ -17,16 +17,16 @@ public abstract class Roslina extends Organizm {
         if (czyRozmnozyc == 0) {
             if (swiat.czyWolnePoleObok(this)) {
                 rozmnazanie();
-                System.out.println(nazwa() + " rozprzestrzenia sie na polu (" + x + ", " + y + ")\n");
+                swiat.dodajKomentarz(nazwa() + " rozprzestrzenia sie na polu (" + x + ", " + y + ")\n\n");
             }
             else
-                System.out.println(nazwa() + " nie mogl sie rozprzestrzenic na polu (" + x + ", " + y + "), gdyz nie bylo miejsca obok\n");
+                swiat.dodajKomentarz(nazwa() + " nie mogl sie rozprzestrzenic na polu (" + x + ", " + y + "), gdyz nie bylo miejsca obok\n\n");
         }
     }
 
     @Override
     public void kolizja(Organizm organizm) {
-        System.out.println(organizm.nazwa() + " zjadl " + nazwa() + " na polu (" + x + ", " + y + ")\n");
+        swiat.dodajKomentarz(organizm.nazwa() + " zjadl " + nazwa() + " na polu (" + x + ", " + y + ")\n\n");
         swiat.usunOrganizm(this);
     }
 }

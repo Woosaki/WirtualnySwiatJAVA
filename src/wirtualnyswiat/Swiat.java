@@ -78,7 +78,16 @@ public class Swiat {
         });
     }
 
+    public void dodajKomentarz(String str) {
+        komentarz += str;
+    }
+
+    public String getKomentarz() {
+        return komentarz;
+    }
+
     public void wykonajTure() {
+        komentarz = "";
         sortOrganizmow();
         for (int i = 0; i < kolejnosc.size()- iloscNowychOrganizmow; i++) {
             kolejnosc.get(i).akcja();
@@ -87,36 +96,6 @@ public class Swiat {
         iloscNowychOrganizmow = 0;
         tura++;
     }
-
-    /*public void rysujSwiat() {
-        System.out.println("\n\t\t\tTURA: " + tura);
-        System.out.print("===============================================================\n    ");
-        for (int i = 0; i < N; i++)	{
-            if (i < 10)
-                System.out.print(i + "  ");
-            else
-                System.out.print(i + " ");
-        }
-        System.out.println();
-        for (int i = 0; i < N; i++)	{
-            for (int j = 0; j < N; j++)	{
-                if (j == 0 && i < 10)
-                    System.out.print(i + "   ");
-                if (j == 0 && i > 9)
-                    System.out.print(i + "  ");
-                if (mapa[j][i] != null)
-                    System.out.print(mapa[j][i].rysowanie() + "  ");
-			    else
-                    System.out.print(".  ");
-            }
-            System.out.println();
-        }
-        System.out.println("===============================================================");
-        System.out.println("\t\t   WYKONAJ TURE :    1");
-        System.out.println("\t\t   ZAPISZ DO PLIKU : 2 ");
-        System.out.println("\t\t   WCZYTAJ Z PLIKU : 3 ");
-        System.out.println("===============================================================");
-    }*/
 
     private void dodajLosowoOrganizmNaMape(Organizm organizm) {
         Random random = new Random();
@@ -230,6 +209,7 @@ public class Swiat {
     }
 
     private final int N;
+    private String komentarz;
     private Organizm[][] mapa;
     private ArrayList<Organizm> kolejnosc;
     private int tura;

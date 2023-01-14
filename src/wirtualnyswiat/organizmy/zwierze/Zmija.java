@@ -21,8 +21,8 @@ public class Zmija extends Zwierze {
             if (czyRozmnozyc(organizm))
                 rozmnazanie();
             else if (this.sila <= organizm.getSila()) {
-                System.out.println(nazwa() + " zatruwa " + organizm.nazwa() + " i oba organizmy gina na polu ("
-                        + organizm.getX() + ", " + organizm.getY() + ")\n");
+                swiat.dodajKomentarz(nazwa() + " zatruwa " + organizm.nazwa() + " i oba organizmy gina na polu ("
+                        + organizm.getX() + ", " + organizm.getY() + ")\n\n");
                 swiat.usunOrganizm(organizm);
                 swiat.usunOrganizm(this);
             } else
