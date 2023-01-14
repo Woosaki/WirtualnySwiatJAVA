@@ -1,11 +1,9 @@
 package wirtualnyswiat;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLOutput;
 
 public class GameFrame extends JFrame implements ActionListener {
     private Swiat swiat;
@@ -20,6 +18,7 @@ public class GameFrame extends JFrame implements ActionListener {
         super("Wirtualny Swiat JAVA");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
+        this.setIconImage(new ImageIcon("logoWirtualnySwiat.png").getImage());
 
         swiat = new Swiat();
 
@@ -40,15 +39,18 @@ public class GameFrame extends JFrame implements ActionListener {
         JMenu plikMenu = new JMenu("Plik");
 
         wczytajMenu = new JMenuItem("Wczytaj");
+        wczytajMenu.setIcon(new ImageIcon("wczytajGre.png"));
         wczytajMenu.addActionListener(this);
         plikMenu.add(wczytajMenu);
 
         zapiszMenu = new JMenuItem("Zapisz");
+        zapiszMenu.setIcon(new ImageIcon("zapiszGre.png"));
         zapiszMenu.addActionListener(this);
         plikMenu.add(zapiszMenu);
 
         JMenu infoMenu = new JMenu("Info");
         oMnieMenu = new JMenuItem("O mnie");
+        oMnieMenu.setIcon(new ImageIcon("oMnie.png"));
         oMnieMenu.addActionListener(this);
         infoMenu.add(oMnieMenu);
 
@@ -108,6 +110,7 @@ public class GameFrame extends JFrame implements ActionListener {
         komentarzScroll.setBackground(Color.LIGHT_GRAY);
         komentarzScroll.setBounds(640,20,600,500);
         komentarzScroll.setFocusable(false);
+        komentarzScroll.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3));
 
         this.add(komentarzScroll);
     }
@@ -168,9 +171,9 @@ public class GameFrame extends JFrame implements ActionListener {
             komentarz.setText(swiat.getKomentarz());
             zmienKolory();
         } else if(e.getSource() == wczytajMenu) {
-            System.out.println("Wczytano poprzedni stan gry");
+            komentarz.setText("\n\n\t\t         Wczytano poprzedni stan gry");
         } else if(e.getSource() == zapiszMenu) {
-            System.out.println("Zapisano stan gry");
+            komentarz.setText("\n\n\t\t                   Zapisano stan gry");
         } else if (e.getSource() == oMnieMenu) {
             JOptionPane.showMessageDialog(null, "Kamil Szczukowski 186714", "Projekt stworzyl:", JOptionPane.PLAIN_MESSAGE);
         }
