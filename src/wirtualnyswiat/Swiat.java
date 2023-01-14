@@ -15,35 +15,35 @@ public class Swiat {
         this.N = 20;
         this.mapa = new Organizm[N][N];
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = -1; i < N / 3; i++) {
             Organizm organizm = new Wilk(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
-        for (int i = 0; i < 6; i++) {
+        for (int i = -1; i < N / 4; i++) {
             Organizm organizm = new Owca(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = -1; i < N / 5; i++) {
             Organizm organizm = new Leniwiec(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
-        for (int i = 0; i < 5; i++) {
+        for (int i = -1; i < N / 4; i++) {
             Organizm organizm = new Zmija(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
-        for (int i = 0; i < 4; i++) {
+        for (int i = -1; i < N / 5; i++) {
             Organizm organizm = new Mysz(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
-        for (int i = 0; i < 3; i++) {
+        for (int i = -1; i < N / 5; i++) {
             Organizm organizm = new Trawa(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = -1; i < N / 6; i++) {
             Organizm organizm = new Guarana(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
-        for (int i = 0; i < 1; i++) {
+        for (int i = -1; i < N / 10; i++) {
             Organizm organizm = new Ciern(this);
             dodajLosowoOrganizmNaMape(organizm);
         }
@@ -58,6 +58,10 @@ public class Swiat {
 
     public void ustawTura(int tura) {
         this.tura = tura;
+    }
+
+    public void ustawRozmiar(int N) {
+        this.N = N;
     }
 
     public void zwiekszIloscNowychOrganizmow(){
@@ -224,10 +228,10 @@ public class Swiat {
         return false;
     }
 
-    private final int N;
+    private int N;
     private String komentarz;
-    private Organizm[][] mapa;
-    private ArrayList<Organizm> kolejnosc;
+    private final Organizm[][] mapa;
+    private final ArrayList<Organizm> kolejnosc;
     private int tura;
     private int iloscNowychOrganizmow;
 }

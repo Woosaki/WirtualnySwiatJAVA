@@ -9,19 +9,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GameFrame extends JFrame implements ActionListener {
-    private Swiat swiat;
+    private final Swiat swiat;
+    private final int rozmiarSwiata;
     private JMenuItem wczytajMenu;
     private JMenuItem zapiszMenu;
     private JMenuItem oMnieMenu;
@@ -36,6 +34,7 @@ public class GameFrame extends JFrame implements ActionListener {
         this.setIconImage(new ImageIcon("logoWirtualnySwiat.png").getImage());
 
         swiat = new Swiat();
+        rozmiarSwiata = swiat.getRozmiar();
 
         stworzMenu();
         stworzGlownyPanel();
@@ -78,22 +77,22 @@ public class GameFrame extends JFrame implements ActionListener {
     private void stworzGlownyPanel() {
         JPanel panelX = new JPanel();
         panelX.setBounds(20,0,600,20);
-        panelX.setLayout(new GridLayout(1, 20));
+        panelX.setLayout(new GridLayout(1, rozmiarSwiata));
 
         JPanel panelY = new JPanel();
         panelY.setBounds(0,20,20,600);
-        panelY.setLayout(new GridLayout(20, 1));
+        panelY.setLayout(new GridLayout(rozmiarSwiata, 1));
 
         JPanel mapaPanel = new JPanel();
         mapaPanel.setBackground(Color.darkGray);
         mapaPanel.setBounds(20,20,600,600);
-        mapaPanel.setLayout(new GridLayout(20, 20));
+        mapaPanel.setLayout(new GridLayout(rozmiarSwiata, rozmiarSwiata));
 
-        JLabel[] indexX = new JLabel[20];
-        JLabel[] indexY = new JLabel[20];
-        przycisk = new JButton[20][20];
+        JLabel[] indexX = new JLabel[rozmiarSwiata];
+        JLabel[] indexY = new JLabel[rozmiarSwiata];
+        przycisk = new JButton[rozmiarSwiata][rozmiarSwiata];
 
-        for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < rozmiarSwiata; i++) {
             indexX[i] = new JLabel(String.valueOf(i));
             indexX[i].setVerticalAlignment(JLabel.CENTER);
             indexX[i].setHorizontalAlignment(JLabel.CENTER);
@@ -104,8 +103,9 @@ public class GameFrame extends JFrame implements ActionListener {
             indexY[i].setHorizontalAlignment(JLabel.CENTER);
             panelY.add(indexY[i]);
 
-            for(int j = 0; j < 20; j++) {
+            for(int j = 0; j < rozmiarSwiata; j++) {
                 przycisk[i][j] = new JButton();
+                przycisk[i][j].addActionListener(this);
                 mapaPanel.add(przycisk[i][j]);
             }
         }
@@ -197,8 +197,8 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
     private void zmienKolory() {
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 20; j++) {
+        for (int i = 0; i < rozmiarSwiata; i++) {
+            for (int j = 0; j < rozmiarSwiata; j++) {
                 Organizm organizm = swiat.organizmNaPolu(i, j);
                 if (organizm == null)
                     przycisk[i][j].setBackground(Color.white);
@@ -210,7 +210,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
     private void zapiszGre() {
         StringBuilder str = new StringBuilder();
-        str.append(swiat.getTura()).append("\n").append(swiat.getRozmiar()).append("\n");
+        str.append(swiat.getRozmiar()).append("\n").append(swiat.getTura()).append("\n");
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 20; j++) {
                 Organizm organizm = swiat.organizmNaPolu(i, j);
@@ -234,9 +234,10 @@ public class GameFrame extends JFrame implements ActionListener {
             for (int i = 0; i < linie.size(); i++) {
                 String str = linie.get(i);
                 if (i == 0) {
-                    swiat.ustawTura(Integer.parseInt(str));
-                } else if (i == 1) {
+                    //rozmiarSwiata = Integer.parseInt(str);
                     //swiat.ustawRozmiar(Integer.parseInt(str));
+                } else if (i == 1) {
+                    swiat.ustawTura(Integer.parseInt(str));
                 }
                 else {
                     List<String> atrybuty = Arrays.asList(str.split(" "));
